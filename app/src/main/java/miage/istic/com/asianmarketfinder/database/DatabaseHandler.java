@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import miage.istic.com.asianmarketfinder.database.favoris.FavorisDAO;
+import miage.istic.com.asianmarketfinder.database.sto_tag.Sto_tagDAO;
 import miage.istic.com.asianmarketfinder.database.store.StoreDAO;
 import miage.istic.com.asianmarketfinder.database.tag.TagDAO;
 import miage.istic.com.asianmarketfinder.database.user.UserDAO;
@@ -22,6 +24,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(UserDAO.TABLE_CREATE);
         db.execSQL(StoreDAO.TABLE_CREATE);
         db.execSQL(TagDAO.TABLE_CREATE);
+        db.execSQL(FavorisDAO.TABLE_CREATE);
+        db.execSQL(Sto_tagDAO.TABLE_CREATE);
     }
 
     @Override
@@ -29,6 +33,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(UserDAO.TABLE_DROP);
         db.execSQL(StoreDAO.TABLE_DROP);
         db.execSQL(TagDAO.TABLE_DROP);
+        db.execSQL(FavorisDAO.TABLE_DROP);
+        db.execSQL(Sto_tagDAO.TABLE_DROP);
         onCreate(db);
     }
 }
