@@ -4,17 +4,18 @@ package miage.istic.com.asianmarketfinder.database.store;
  * Created by Rom on 11/21/2016.
  */
 public class Store {
-    private long id;
+    private String id;
     private String name;
-    private float lon;
-    private float lat;
+    private double lon;
+    private double lat;
     private String opening;
 
-    public long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -26,7 +27,7 @@ public class Store {
         this.name = name;
     }
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
@@ -34,7 +35,7 @@ public class Store {
         this.lon = lon;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
@@ -50,11 +51,21 @@ public class Store {
         this.opening = opening;
     }
 
-    public Store(long id, String name, float lon, float lat, String opening) {
+    public Store(String id, String name, double lon, double lat, String opening) {
         this.id = id;
         this.name = name;
         this.lon = lon;
         this.lat = lat;
         this.opening = opening;
+    }
+
+    public Store(String name, double lon, double lat, String opening) {
+        this.name = name;
+        this.lon = lon;
+        this.lat = lat;
+        this.opening = opening;
+    }
+
+    public Store() {
     }
 }

@@ -5,7 +5,7 @@ package miage.istic.com.asianmarketfinder.database.sto_tag;
  */
 public class Sto_tag {
     private long id;
-    private long sto_id;
+    private String sto_id;
     private long tag_id;
 
     public long getId() {
@@ -16,11 +16,11 @@ public class Sto_tag {
         this.id = id;
     }
 
-    public long getSto_id() {
+    public String getSto_id() {
         return sto_id;
     }
 
-    public void setSto_id(long sto_id) {
+    public void setSto_id(String sto_id) {
         this.sto_id = sto_id;
     }
 
@@ -32,9 +32,12 @@ public class Sto_tag {
         this.tag_id = tag_id;
     }
 
-    public Sto_tag(long id, long sto_id, long tag_id) {
+    public Sto_tag(long id, String sto_id, long tag_id) {
         this.id = id;
         this.sto_id = sto_id;
         this.tag_id = tag_id;
+    }
+
+    public Sto_tag() {
     }
 }

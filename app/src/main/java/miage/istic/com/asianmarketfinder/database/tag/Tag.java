@@ -4,14 +4,14 @@ package miage.istic.com.asianmarketfinder.database.tag;
  * Created by Rom on 11/21/2016.
  */
 public class Tag {
-    private long id;
+    private String id;
     private String name;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -23,8 +23,11 @@ public class Tag {
         this.name = name;
     }
 
-    public Tag(long id, String name) {
+    public Tag(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Tag() {
     }
 }

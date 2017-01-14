@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "869432666944",
+    "firebase_url": "https://asianmarketfinder.firebaseio.com",
+    "project_id": "asianmarketfinder",
+    "storage_bucket": "asianmarketfinder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869432666944:android:7f2753a32b2dbe7b",
+        "android_client_info": {
+          "package_name": "miage.istic.com.asianmarketfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869432666944-hk96656ps3ha14es37thqatfhonvmh75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy2ReZNj-S37WG1GxO4XFVIJE2wR76Uhg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,7 +14,7 @@ public class TagDAO extends DAOBase {
     public static final String NAME = "tag_name";
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
-            KEY + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+            KEY + " VARCHAR(45) NOT NULL PRIMARY KEY AUTOINCREMENT, " +
             NAME + " VARCHAR(45) NOT NULL, " +
             ");";
 
