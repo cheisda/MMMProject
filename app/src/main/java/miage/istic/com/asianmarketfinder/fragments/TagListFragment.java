@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.security.auth.callback.Callback;
+
+import miage.istic.com.asianmarketfinder.MapsActivity;
 import miage.istic.com.asianmarketfinder.R;
 import miage.istic.com.asianmarketfinder.adapters.TagAdapter;
 import miage.istic.com.asianmarketfinder.database.sto_tag.Sto_tag;
@@ -71,6 +77,17 @@ public class TagListFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         final Context ctx = this.getActivity();
         final FirebaseDatabase databaseReference = mFirebaseDatabaseReference.getDatabase();
+        this.listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("azre: " + ((TextView) ((RelativeLayout) view).findViewById(R.id.tag_libelle)).getText().toString());
+                Uri uri = Uri.parse("http://www.google.com/#q=" + ((TextView) ((RelativeLayout) view).findViewById(R.id.tag_libelle)).getText().toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                return true;
+            }
+        });
+
         if (this.idStore != null && this.idStore != "") {
             databaseReference.getReference("sto_tag").orderByChild("sto_id").startAt(this.idStore).endAt(this.idStore).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -139,14 +156,19 @@ public class TagListFragment extends Fragment {
 
                         }
                     });*/
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    Fragment prev = getFragmentManager().findFragmentByTag("dialogTag");
-                    if (prev != null) {
-                        ft.remove(prev);
+                    Log.e("tag", "handleSignInResult:" + ((MapsActivity) getActivity()).getUser());
+                    if(((MapsActivity)getActivity()).getUser() != null ){
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        Fragment prev = getFragmentManager().findFragmentByTag("dialogTag");
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
+                        DialogTagFragment dialogTagFragment = DialogTagFragment.newInstance(idStore);
+                        dialogTagFragment.show(ft, "dialogTag");
+                    }else{
+                        ((MapsActivity)getActivity()).signIn();
                     }
-                    ft.addToBackStack(null);
-                    DialogTagFragment dialogTagFragment = DialogTagFragment.newInstance(idStore);
-                    dialogTagFragment.show(ft, "dialogTag");
 
                 }
             });

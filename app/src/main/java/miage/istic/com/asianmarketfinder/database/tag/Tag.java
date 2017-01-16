@@ -6,6 +6,7 @@ package miage.istic.com.asianmarketfinder.database.tag;
 public class Tag {
     private String id;
     private String name;
+    private String creator;
 
     public String getId() {
         return id;
@@ -23,6 +24,14 @@ public class Tag {
         this.name = name;
     }
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     public Tag(long id, String name) {
         this.id = Long.toString(id);
         this.name = name;
@@ -31,6 +40,12 @@ public class Tag {
     public Tag(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Tag(String id, String name, String creator) {
+        this.id = id;
+        this.name = name;
+        this.creator = creator;
     }
 
     public Tag(String name) {

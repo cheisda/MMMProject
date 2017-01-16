@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import miage.istic.com.asianmarketfinder.MapsActivity;
 import miage.istic.com.asianmarketfinder.R;
 import miage.istic.com.asianmarketfinder.adapters.TagAdapter;
 import miage.istic.com.asianmarketfinder.database.sto_tag.Sto_tag;
@@ -108,14 +109,9 @@ public class DialogTagFragment extends android.support.v4.app.DialogFragment {
                             if (!dataSnapshot.exists()) {
                                 DatabaseReference newRef = databaseReference.getReference("tag").push();
                                 String newId = newRef.getKey();
-                                Tag tag = new Tag(newId, newTagValue);
+                                Tag tag = new Tag(newId, newTagValue, ((MapsActivity)getActivity()).getUser().getUid());
                                 newRef.setValue(tag);
                                 msg = "Tag created !";
-                                /*newRef = databaseReference.getReference("sto_tag").push();
-                                String stoTagId = newRef.getKey();
-                                System.out.println("ss: " + storeId);
-                                Sto_tag sto_tag = new Sto_tag(stoTagId, storeId, newId);
-                                newRef.setValue(sto_tag);*/
                             }else{
                                 msg = "Tag already exists !";
                             }
