@@ -14,8 +14,10 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -51,6 +53,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -60,6 +63,7 @@ import miage.istic.com.asianmarketfinder.database.sto_tag.Sto_tag;
 import miage.istic.com.asianmarketfinder.database.store.Store;
 import miage.istic.com.asianmarketfinder.database.store.StoreDAO;
 import miage.istic.com.asianmarketfinder.database.tag.Tag;
+import miage.istic.com.asianmarketfinder.fragments.TagListFragment;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -71,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private StringBuilder placesBuilder;
     private final DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
     private HashMap<Marker, String> markerStringHashMap = new HashMap<>();
+    private Bundle saveInstance;
 
     public HashMap<Marker, String> getMarkerStringHashMap() {
         return markerStringHashMap;
@@ -87,7 +92,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        this.saveInstance = savedInstanceState;
+        setContentView(R.layout.activity_main);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -181,40 +187,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 final String id = ma.getMarkerStringHashMap().get(marker);
                 System.out.println(id);
 
-                final FirebaseDatabase databaseReference = mFirebaseDatabaseReference.getDatabase();
-                databaseReference.getReference("sto_tag").orderByChild("sto_id").startAt(id).endAt(id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Sto_tag sto_tag = snapshot.getValue(Sto_tag.class);
-                                System.out.println("tre: " + sto_tag.getTag_id());
-                                databaseReference.getReference("tag").orderByChild("id").startAt(sto_tag.getTag_id()).endAt(sto_tag.getTag_id()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            System.out.println("sqd: " + dataSnapshot);
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                Tag tag = snapshot.getValue(Tag.class);
-                                                System.out.println("tag: " + tag);
-                                            }
-                                        }
-                                    }
+                TagListFragment tagListFragment = new TagListFragment();
+                Bundle args = new Bundle();
+                args.putString("id_store", id);
+                tagListFragment.setArguments(args);
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.tag_list, tagListFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
 /*                mFirebaseDatabaseReference.child("sto_tag").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
